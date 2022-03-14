@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\CarrentalController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashbordController;
+use App\Http\Controllers\DriverController;
+use App\Http\Controllers\VehiculeController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -34,6 +38,10 @@ Route::middleware('auth')->group(function () {
         return Inertia::render('About');
     })->name('about');
 
+    Route::resource('Carrentals',CarrentalController::class);
+    Route::resource('drivers',DriverController::class);
+    Route::resource('companies',CompanyController::class);
+    Route::resource('vehicules',VehiculeController::class);
     Route::get('users', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');
 
     Route::get('profile', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile.show');
