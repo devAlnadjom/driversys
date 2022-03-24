@@ -94,8 +94,10 @@
                       <td class="px-4 py-3 text-sm items-center">
                         <div>
                             <p class="font-semibold">{{vehicule.carrental?.name}} </p>
-                            <p class="text-xs text-gray-600 dark:text-gray-400">
-                              {{vehicule?.avaible}}
+                            <p class="text-xs text-gray-600 dark:text-gray-400 mt-2">
+
+                              <span v-if="vehicule?.avaible==1" class=" p-1 bg-green-100 text-green-700 text-xs rounded "> Active</span>
+                              <span v-if="vehicule?.avaible==0" class=" p-1 bg-red-100 text-red-700 text-xs rounded"> Not Active</span>
                             </p>
                           </div>
 
@@ -104,7 +106,7 @@
 
                             <Link
 
-                             :href="route('vehicules.edit',vehicule.id)" class="text-sm text-gray-500 hover:text-gray-700"> Details</Link>
+                             :href="route('vehicules.edit',vehicule.id)" class="text-sm text-gray-500 hover:text-gray-700 p-1 hover:bg-gray-100 rounded"> Details</Link>
 
 
                       </td>

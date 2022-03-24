@@ -25,7 +25,7 @@ use Illuminate\Support\Carbon;
             ]);
         }
 
-        ddd($week);
+        //ddd($week);
 
     }
 
