@@ -38,7 +38,7 @@ Route::middleware('auth')->group(function () {
         return Inertia::render('About');
     })->name('about');
 
-    Route::resource('Carrentals',CarrentalController::class);
+    Route::resource('carrentals',CarrentalController::class);
     Route::resource('drivers',DriverController::class);
     Route::resource('companies',CompanyController::class);
     Route::resource('vehicules',VehiculeController::class);

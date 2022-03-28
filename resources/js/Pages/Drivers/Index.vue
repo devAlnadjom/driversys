@@ -1,11 +1,11 @@
 <template>
-  <Head title="Liste des vehicules"/>
+  <Head title="Liste des drivers"/>
 
   <BreezeAuthenticatedLayout>
     <template #header >
         <div class="flex md:flex-row md:justify-between w-full">
-            <p> Liste des vehicules  </p>
-            <p class="ml-2 p-2 bg-green-50 shadow-sm text-lg"> Total:  <span class=" text-green-600">{{vehicules.data.length}} </span>   </p>
+            <p> Liste des drivers  </p>
+            <p class="ml-2 p-2 bg-green-50 shadow-sm text-lg"> Total:  <span class=" text-green-600">{{drivers.data.length}} </span>   </p>
         </div>
 
     </template>
@@ -47,8 +47,8 @@
             </div>
                 <button class="ml-3 text-sm text-gray-500 hover:text-gray-700 focus:text-indigo-500 " type="button" @click="reset()">Effacer</button>
         </div>
-            <Link :href="route('vehicules.create',)" active class="block">
-                    <span class="flex ml-auto text-white bg-indigo-500 border-0 py-1 px-4 focus:outline-none hover:bg-indigo-600 rounded">Nouveau Vehicule</span>
+            <Link :href="route('drivers.create',)" active class="block">
+                    <span class="flex ml-auto text-white bg-indigo-500 border-0 py-1 px-4 focus:outline-none hover:bg-indigo-600 rounded">Nouveau Driver</span>
             </Link>
     </div>
 
@@ -59,55 +59,42 @@
                   <thead>
                     <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-100 dark:text-gray-400 dark:bg-gray-800">
                       <th class="px-4 py-3">#</th>
-                      <th class="px-4 py-3">Modele</th>
-                      <th class="px-4 py-3">Matricule</th>
+                      <th class="px-4 py-3">Nom </th>
+                      <th class="px-4 py-3">Contact</th>
                       <th class="px-4 py-3">Infos</th>
                       <th class="px-4 py-3">Action</th>
                     </tr>
                   </thead>
                   <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                    <tr class="text-gray-700 dark:text-gray-400" v-for="vehicule in vehicules.data" :key="vehicule.id_ui">
+                    <tr class="text-gray-700 dark:text-gray-400" v-for="driver in drivers.data" :key="driver.id_ui">
                       <td class="px-4 py-3">
-                        <div class="flex items-center text-sm">
-                          <!-- Avatar with inset shadow -->
-
-                          <div>
-                            <p class="font-semibold">{{vehicule.id}}</p>
-
-                          </div>
-                        </div>
+                            <p class="font-semibold">{{driver.id}}</p>
                       </td>
                       <td class="px-4 py-3 text-sm">
-
-                        <div>
-                            <p class="font-semibold">{{vehicule?.model}}</p>
-                            <p class="text-xs text-gray-600 dark:text-gray-400">
-                              {{vehicule?.nplace}} Places
-                            </p>
-                          </div>
+                            <p class="font-semibold">{{driver?.name}}</p>
 
                       </td>
                       <td class="px-4 py-3 text-sm">
-                          <p class="font-semibold">{{vehicule?.registration}} </p>
+                          <p class="font-semibold">{{driver?.contact}} </p>
+                          <p class="text-sm">{{driver?.adress}} </p>
+
 
                       </td>
                       <td class="px-4 py-3 text-sm items-center">
                         <div>
-                            <p class="font-semibold">{{vehicule.carrental?.name}} </p>
+                            <p class="font-semibold">{{driver?.license_category}} </p>
                             <p class="text-xs text-gray-600 dark:text-gray-400 mt-2">
 
-                              <span v-if="vehicule?.avaible==1" class=" p-1 bg-green-100 text-green-700 text-xs rounded "> Active</span>
-                              <span v-if="vehicule?.avaible==0" class=" p-1 bg-red-100 text-red-700 text-xs rounded"> Not Active</span>
+                              <span v-if="driver?.active==1" class=" p-1 bg-green-100 text-green-700 text-xs rounded "> Active</span>
+                              <span v-if="driver?.active==0" class=" p-1 bg-red-100 text-red-700 text-xs rounded"> Not Active</span>
                             </p>
                           </div>
 
                       </td>
                       <td class="px-4 py-3 ">
 
-                            <Link
-
-                             :href="route('vehicules.edit',vehicule.id)" class="text-sm text-gray-500 hover:text-gray-700 p-1 hover:bg-gray-100 rounded"> Details</Link>
-
+                            <Link :href="route('drivers.edit',driver.id)" class="text-sm text-gray-500 hover:text-gray-700 p-1 hover:bg-gray-100 rounded"> Details
+                             </Link>
 
                       </td>
                     </tr>
@@ -117,7 +104,7 @@
                 </table>
               </div>
               <div class="flex flex-row-reverse bg-slate-100 px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
-                  <pagination :links="vehicules.links" />
+                  <pagination :links="drivers.links" />
               </div>
             </div>
 
@@ -145,7 +132,7 @@ export default {
     Link,
   },
   props:{
-    vehicules:Object,
+    drivers:Object,
     filters: Object,
   },
   data() {
@@ -162,7 +149,7 @@ export default {
     form: {
       deep: true,
       handler: throttle(function() {
-        this.$inertia.get(this.route('vehicules.index'), pickBy(this.form), { preserveState: true })
+        this.$inertia.get(this.route('drivers.index'), pickBy(this.form), { preserveState: true })
       }, 400),
     },
   },

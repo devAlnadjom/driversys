@@ -1,0 +1,218 @@
+<template>
+  <Head :title="'Driver - '+driver?.id"/>
+
+  <BreezeAuthenticatedLayout>
+
+
+
+
+       <!-- This example requires Tailwind CSS v2.0+ -->
+<div class="lg:flex  lg:w-3/4 lg:items-center lg:justify-between">
+  <div class="flex-1 min-w-0">
+    <h2 class="text-lg font-bold leading-7 text-gray-900 sm:text-2xl sm:truncate">Driver - {{driver?.id}}</h2>
+
+  </div>
+  <div class="mt-5 flex lg:mt-0 lg:ml-4">
+
+
+    <span class="sm:ml-3">
+           <button type="button" @click="$inertia.visit(route('drivers.index'))" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 ">
+        <!-- Heroicon name: solid/check -->
+        <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+        </svg>
+        Retour
+      </button>
+    </span>
+
+
+  </div>
+</div>
+
+    <div class="lg:w-2/3 mt-5">
+    <div v-show="$page.props.flash.success"
+           class="inline-flex w-full mb-4 overflow-hidden bg-green-700 rounded-lg shadow-md">
+        <div class="flex items-center justify-center w-12 bg-green-600">
+          <svg class="w-6 h-6 text-white fill-current" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+            <path
+                d="M20 3.33331C10.8 3.33331 3.33337 10.8 3.33337 20C3.33337 29.2 10.8 36.6666 20 36.6666C29.2 36.6666 36.6667 29.2 36.6667 20C36.6667 10.8 29.2 3.33331 20 3.33331ZM16.6667 28.3333L8.33337 20L10.6834 17.65L16.6667 23.6166L29.3167 10.9666L31.6667 13.3333L16.6667 28.3333Z">
+            </path>
+          </svg>
+        </div>
+
+        <div class="px-4 py-2 -mx-3 ">
+          <div class="mx-3">
+            <span class="font-semibold text-white">Success</span>
+            <p class="text-sm text-gray-100">{{ $page.props.flash.success }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+        <BreezeValidationErrors class="mt-3"/>
+    </div>
+
+    <div class="w-full lg:w-3/4 overflow-hidden rounded-lg border shadow-xs mt-10 mb-10">
+        <!-- This example requires Tailwind CSS v2.0+ -->
+<div class="bg-white shadow overflow-hidden sm:rounded-lg">
+    <form @submit.prevent="submit">
+  <div class="px-4 py-5 sm:px-6">
+    <h3 class="text-lg leading-6 font-medium text-gray-900">Information Sur le Driver</h3>
+    <p class="mt-1 max-w-2xl text-sm text-gray-500">Veuillez remplir convenablement le formulaire. </p>
+    <div class="mt-4">
+           </div>
+  </div>
+  <div class="border-t border-gray-200">
+    <dl>
+      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 items-center sm:px-6">
+        <dt class="text-sm font-medium text-gray-500">Nom</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+             <BreezeInput  id="model" type="text" v-model="form.name" class="block w-full mt-1" required  autofocus   />
+
+        </dd>
+      </div>
+      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 items-center sm:px-6">
+        <dt class="text-sm font-medium text-gray-500">Contact</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+             <BreezeInput  id="registration" type="text" v-model="form.contact" class="block w-full mt-1"    required  autofocus   />
+
+        </dd>
+      </div>
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500">Adress</dt>
+        <dd class="mt-1 text-sm font-semibold text-gray-900 sm:mt-0 sm:col-span-2">
+             <BreezeInput   id="nplace" type="text" v-model="form.adress" class="block w-full mt-1"    required  autofocus   />
+
+        </dd>
+      </div>
+      <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500">Drivrer Licence</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+             <textarea
+                class="mt-1 border border-gray-300 rounded-md shadow-sm px-3 py-2 focus:border-indigo-400 focus:ring-1 focus:ring-primary-200 focus:ring-opacity-50 focus-within:text-indigo-900 w-full"
+                 id="insurance" v-model="form.driver_license" rows="5">
+                 </textarea>
+        </dd>
+      </div>
+
+
+
+      <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500">Autres Infos</dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+          <ul role="list" class="border border-gray-200 rounded-md divide-y divide-gray-200">
+            <li v-if="!iscarrental" class="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
+              <div class="w-0 flex-1 flex items-center">
+
+                <span class="ml-2 flex-1 w-0 truncate">License Cateory</span>
+              </div>
+              <div class="ml-4 flex-shrink-0">
+                 <select v-model="form.license_category" class=" text-sm px-2  border border-gray-300 rounded-md shadow-sm  focus:border-indigo-400  focus:ring-1 focus:ring-indigo-400 focus:ring-opacity-50 focus-within:text-indigo-900 p-1">
+                        <option value="">Choisissez la Categorie&nbsp;&nbsp;&nbsp;&nbsp;</option>
+                        <option value="A1">Leger</option>
+                        <option value="B2">9+ Places</option>
+                        <option value="C3">Camion leger</option>
+                        <option value="C5">Poids lourd</option>
+                    </select>
+              </div>
+            </li>
+            <li v-if="!iscarrental" class="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
+              <div class="w-0 flex-1 flex items-center">
+
+                <span class="ml-2 flex-1 w-0 truncate"> Disponible </span>
+              </div>
+              <div class="ml-4 flex-shrink-0">
+                 <select v-model="form.active" class=" text-sm px-2  border border-gray-300 rounded-md shadow-sm  focus:border-indigo-400  focus:ring-1 focus:ring-indigo-400 focus:ring-opacity-50 focus-within:text-indigo-900 p-1">
+                        <option :value="1">Disponible &nbsp;&nbsp;&nbsp;&nbsp;</option>
+                        <option :value="0">Non Disponible &nbsp;&nbsp;&nbsp;&nbsp;</option>
+                    </select>
+              </div>
+            </li>
+          </ul>
+        </dd>
+      </div>
+      <div class="bg-white border-t px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt class="text-sm font-medium text-gray-500"></dt>
+        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+            <div class="flex items-center justify-end mt-4">
+            <span
+
+                class="text-sm text-gray-600 underline  hover:text-gray-900"
+            >
+              Effacer
+            </span>
+
+            <BreezeButton
+                class="ml-8" :class="{ 'opacity-25': form.processing }" :disabled="form.processing"  >
+              Soummetre la Demande
+            </BreezeButton>
+          </div>
+        </dd>
+      </div>
+    </dl>
+  </div>
+
+    </form>
+    </div>
+
+
+    </div>
+
+
+
+
+  </BreezeAuthenticatedLayout>
+</template>
+
+<script>
+import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue';
+import Pagination from '@/Components/Pagination.vue';
+import BreezeInput from '@/Components/Input.vue';
+import BreezeButton from '@/Components/Button.vue';
+
+import BreezeValidationErrors from '@/Components/ValidationErrors.vue';
+import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
+
+export default {
+  components: {
+    BreezeAuthenticatedLayout,
+    Head,
+    Pagination,
+    Link,
+     BreezeInput,BreezeButton,BreezeValidationErrors
+  },
+  data(){
+      return{
+      form: useForm({
+            _method:'PUT',
+            'name':this.driver?.name,
+            'contact':this.driver?.contact,
+            'adress':this.driver?.adress,
+            'driver_license':this.driver?.driver_license,
+            'license_category':this.driver?.license_category,
+            'active':this.driver?.active,
+      }),
+  }
+  },
+  props:{
+      driver: Object,
+  },
+  mounted(){
+
+  },
+  methods:{
+      submit() {
+      this.form.post(this.route('drivers.update', this.driver.id), {
+
+        preserveScroll: false,
+      });
+    },
+
+  }
+
+};
+
+
+
+
+</script>

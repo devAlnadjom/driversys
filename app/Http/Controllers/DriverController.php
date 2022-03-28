@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
+use App\Models\Driver;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use App\Http\Requests\StoreDriverRequest;
+use App\Http\Requests\UpdateDriverRequest;
 
 class DriverController extends Controller
 {
@@ -11,9 +16,17 @@ class DriverController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $drivers= Driver::Select()
+                    ->filter($request->only('search'))
+                    ->paginate(10);
+
+
+        return Inertia::render('Drivers/Index',[
+            'drivers'=> $drivers,
+            'filters' =>[],
+        ]);
     }
 
     /**
@@ -23,52 +36,38 @@ class DriverController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Drivers/Create',[]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+
+    public function store(StoreDriverRequest $request)
     {
-        //
+        Driver::create($request->validated());
+
+        return Redirect::route('drivers.index')->with("success","Driver added succesfully.");
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
-        //
+        return Inertia::render('Drivers/Edit',[
+            'driver'=> Driver::findOrFail($id),
+        ]);
+
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+
+    public function update(UpdateDriverRequest $request, $id)
     {
-        //
+        $driver= Driver::findOrFail($id);
+        $driver->update($request->validated());
+        return Redirect::route('drivers.edit',$driver->id)->with("success","driver Updated.");
     }
 
     /**
