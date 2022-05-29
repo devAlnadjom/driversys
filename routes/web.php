@@ -4,6 +4,7 @@ use App\Http\Controllers\CarrentalController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashbordController;
 use App\Http\Controllers\DriverController;
+use App\Http\Controllers\DriveController;
 use App\Http\Controllers\VehiculeController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -39,6 +40,7 @@ Route::middleware('auth')->group(function () {
     })->name('about');
 
     Route::resource('carrentals',CarrentalController::class);
+    Route::resource('drives',DriveController::class);
     Route::resource('drivers',DriverController::class);
     Route::resource('companies',CompanyController::class);
     Route::resource('vehicules',VehiculeController::class);

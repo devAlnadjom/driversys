@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Driver;
+use App\Models\Vehicule;
+use App\Models\Week;
+use Inertia\Inertia;
 use Illuminate\Http\Request;
 
 class DriveController extends Controller
@@ -16,14 +20,18 @@ class DriveController extends Controller
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
-        //
+        $drivers= Driver::Where('active',1)
+            ->get(['id','name','contact']);
+        $vehicules= Vehicule::Where('avaible',1)
+            ->get(['id','model','registration','nplace']);
+        $weeks= Week::Select()->latest()->take(10);
+
+        dd($vehicules);
+
+        return Inertia::render('Drives/Create',[]);
     }
 
     /**
